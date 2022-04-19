@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import logo from './logo.svg';
 import './App.css';
 
+
+
+
 function App() {
+  const [list, setList] = useState([]);
+
+  const getSharePoint =() =>{
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ test: 'React POST Request Example' })
+    };
+    fetch('https://prod-12.eastasia.logic.azure.com:443/workflows/2fee037e0e8f4e92a8dc6c4791bc0ee5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=F4mHtNB7YFMu5DQPoy8LnaxdBxqLk5Tb9_KU10aTJNs', requestOptions)
+      .then(response => response.json())
+      .then(data => {setList(data.value)});
+    }
+
+
+  useEffect(() => {
+    getSharePoint()
+    
+}, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <body>
+        <table>
+        {list.map(item => {
+            return (<tr>
+              <td>{item['LeaveType']}</td>
+              <td>{item['Email']}</td>
+            </tr>)
+        })}
+        </table>
+        
+      </body>
     </div>
   );
 }

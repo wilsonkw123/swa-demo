@@ -28,6 +28,10 @@ function App() {
     <div className="App">
       <body>
         <table>
+          <tr>
+            <td>Type</td>
+            <td>Email</td>
+          </tr>
         {list.map(item => {
             return (<tr>
               <td>{item['LeaveType']}</td>

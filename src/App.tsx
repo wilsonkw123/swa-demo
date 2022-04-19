@@ -18,8 +18,6 @@ function App() {
       .then(response => response.json())
       .then(data => {setList(data.value)});
     }
-
-
   useEffect(() => {
     getSharePoint()
     
